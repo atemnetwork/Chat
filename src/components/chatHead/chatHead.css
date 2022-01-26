@@ -1,0 +1,26 @@
+.content__header {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ebe7fb;
+  }
+  .current-chatting-user {
+    display: flex;
+    align-items: center;
+  }
+  .current-chatting-user p {
+    margin: 0;
+    font-weight: 600;
+  }
+  .content__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .settings .btn-nobg {
+    color: #000;
+  }
+  .setting {
+
+  }
+  .setting_none {
+    display: none;
+  }
