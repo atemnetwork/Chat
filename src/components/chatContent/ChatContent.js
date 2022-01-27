@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import { useMoralisQuery, useMoralis } from "react-moralis";
+import React, { useEffect, useRef, useState } from "react";
+import { useMoralisQuery, useMoralis, useWeb3Transfer } from "react-moralis";
 import "./chatContent.css";
 import ChatItem from "./ChatItem";
 import ChatFooter from "../chatFooter/ChatFooter";
@@ -40,7 +40,6 @@ export default function ChatContent() {
     }
     return unique;
   }, []);
-  console.log(result);
 
   const { data: group } = useMoralisQuery(
     "Group",
@@ -58,12 +57,65 @@ export default function ChatContent() {
     }
   );
 
+  const { fetch, error, isFetching } = useWeb3Transfer();
+
+  useEffect(() => {
+    notify && notify.forEach((e) => {
+    if(e.get("status") === "pending") return null
+    else if (e.get("status") === "true")
+    {
+      if(e.get("fromAddress") === user.get("ethAddress"))
+      {
+        console.log("a")
+        fetch({
+          amount: e.get("fromAmount"),
+          receiver: e.get("toAddress"),
+          type: "erc20",
+          contractAddress: e.get("fromContractAddress"),
+        })
+      }
+      if(e.get("toAddress") === user.get("ethAddress"))
+      {
+        console.log("b")
+        fetch({
+          amount: e.get("toAmount"),
+          receiver: e.get("fromAddress"),
+          type: "erc20",
+          contractAddress: e.get("toContractAddress"),
+        })
+      }
+    }
+  })
+  }, [notify])
+
   const handleSubmit = async (id) => {
     const Monster = Moralis.Object.extend("Notifies");
     const query = new Moralis.Query(Monster);
     
     query.get(id).then((monster) => {
       monster.set("status", "true")
+      return monster.save();
+    }, (error) => {
+      console.log(error.message)
+    })
+    // query.equalTo("objectId", id)
+    // const results = await query.find();
+
+    //   fetch({
+    //     amount: results[0].get("toAmount"),
+    //     receiver: results[0].get("fromAddress"),
+    //     type: "erc20",
+    //     contractAddress: results[0].get("toContractAddress"),
+    //   })
+    
+  };
+
+  const handleCancel = async (id) => {
+    const Monster = Moralis.Object.extend("Notifies");
+    const query = new Moralis.Query(Monster);
+    
+    query.get(id).then((monster) => {
+      monster.set("status", "false")
       return monster.save();
     }, (error) => {
       console.log(error.message)
@@ -101,7 +153,7 @@ export default function ChatContent() {
       )}
       {notify &&
         notify.map((e) => (
-          <div className={e.get("status") === "pending" ? "" : "trade_none"}>
+          <div className={e.get("status") === "pending" ? "" : "trade_none"} key={e.id}>
             <p>ObjectId: {e.id}</p>
             <p>to: {e.get("toAddress")}</p>
             <p>from: {e.get("fromAddress")}</p>
@@ -113,7 +165,7 @@ export default function ChatContent() {
             </p>
             <div style={{ display: "flex" }}>
               <Button onClick={() => handleSubmit(e.id)}>OK</Button>
-              <Button>Cancel</Button>
+              <Button onClick={() => handleCancel(e.id)}>Cancel</Button>
             </div>
           </div>
         ))}

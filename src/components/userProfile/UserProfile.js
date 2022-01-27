@@ -3,46 +3,26 @@ import "./userProfile.css";
 import person from "../../images/person default.jpg";
 import {
   useMoralis,
-  useERC20Balances,
   useNativeBalance,
   useMoralisQuery,
 } from "react-moralis";
 import { Modal, Button } from "antd";
 // import { useERC20Balance } from "./ERC20Balance";
 import Chain from "./Chain.jsx";
+import GetfullBalance from "../hooks/GetfullBalance";
 
 export default function UserProfile() {
   const { user, setUserData, logout, Moralis, chainId } = useMoralis();
-  const { fetchERC20Balances, data } = useERC20Balances();
+  const { fullBalance } = GetfullBalance()
 
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState("Change username");
   const [username, setUsername] = useState("");
 
-  useEffect(() => {
-    fetchERC20Balances({
-      params: { address: user.get("ethAddress"), chain: chainId },
-    });
-  }, [chainId, fetchERC20Balances, user]);
-
   const { data: nativeBalance, nativeToken } = useNativeBalance();
 
   const { data: groups } = useMoralisQuery("Group");
-
-  const fullBalance = useMemo(() => {
-    if (!data || !nativeBalance) return null;
-    return [
-      ...data,
-      {
-        balance: nativeBalance.balance,
-        decimals: nativeToken.decimals,
-        name: nativeToken.name,
-        symbol: nativeToken.symbol,
-        token_address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      },
-    ];
-  }, [data]);
 
   useEffect(() => {
     if (fullBalance && groups) {
