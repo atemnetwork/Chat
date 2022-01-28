@@ -21,7 +21,6 @@ const useInchDex = (chain) => {
   async function trySwap(params) {
     const { fromToken, fromAmount, chain } = params;
     const amount = Moralis.Units.Token(fromAmount, fromToken.decimals).toString();
-    console.log(amount)
     if (fromToken.address !== "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
       await Moralis.Plugins.oneInch
         .hasAllowance({
@@ -50,7 +49,7 @@ const useInchDex = (chain) => {
         }
         console.log(receipt);
       })
-      .catch((e) => alert(e.message));
+      .catch((e) => console.log(e.message));
   }
 
   async function doSwap(params) {

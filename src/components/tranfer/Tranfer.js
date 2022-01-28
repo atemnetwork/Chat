@@ -54,8 +54,8 @@ function Transfer() {
   console.log(id)
 
   useEffect(() => {
-    asset && amount && id ? setTx({ amount, id, asset }) : setTx();
-  }, [asset, amount, id]);
+    asset && amount ? setTx({ amount, asset }) : setTx();
+  }, [asset, amount]);
 
   const openNotification = ({ message, description }) => {
     notification.open({
@@ -69,7 +69,7 @@ function Transfer() {
   };
 
   async function transfer() {
-    const { amount, receiver, asset } = tx;
+    const { amount, asset } = tx;
 
     let options = {};
 

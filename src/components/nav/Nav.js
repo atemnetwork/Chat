@@ -22,7 +22,7 @@ export default class Nav extends Component {
         <div className="nav__blocks">
           <img src={bsc} alt="bsc"></img>
         </div>
-        <div className="btn-trade">
+        {/* <div className="btn-trade">
           <Link to="/trade">
             Trade
           </Link>
@@ -31,7 +31,7 @@ export default class Nav extends Component {
           <Link to="/tranfer">
             Tranfer
           </Link>
-        </div>
+        </div> */}
         <div className="show_icon">
           {/* <i className="fa fa-clipboard-list"></i> */}
           <i className="fa fa-bell"></i>
