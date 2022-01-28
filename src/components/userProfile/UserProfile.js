@@ -119,7 +119,7 @@ export default function UserProfile() {
 
   const handleCancel = () => {
     console.log("Clicked cancel button");
-    setUsername(user.getUsername);
+    setUsername("");
     setVisible(false);
   };
 

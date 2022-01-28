@@ -5,6 +5,8 @@ import person from "../../images/person default.jpg";
 import { Modal, Button } from "antd";
 import { useMoralis } from "react-moralis";
 import { Link } from "react-router-dom";
+// import { Dropdown } from 'react-bootstrap';
+import { Menu, Dropdown } from 'antd';
 
 function ChatHead({ group, id }) { 
   const users = group.get("username");
@@ -15,7 +17,6 @@ function ChatHead({ group, id }) {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState("Change username");
   const [toAddress, setToAddress] = useState("");
-  console.log(toAddress)
 
   const addMember = (toAddress) => {
     const Monster = Moralis.Object.extend("Group");
@@ -60,28 +61,10 @@ function ChatHead({ group, id }) {
     setVisible(false);
   };
 
-  return (
-    <div className="content__header">
-      <div className="blocks">
-        <div className="current-chatting-user">
-          {users.map((e) => (
-            <Avatar isOnline="active" image={person} key={e} />
-          ))}
-          <p>{group.get("nameGroup")}</p>
-        </div>
-      </div>
-
-      <div className="blocks">
-        <div className="settings">
-          <button
-            className="btn-nobg"
-            visible={visibleDrop}
-            onClick={() => setVisibleDrop(!visibleDrop)}
-          >
-            <i className="fa fa-cog"></i>
-          </button>
-          <div className={visibleDrop ? "setting" : "setting_none"}>
-          <Button type="primary" onClick={showModal} style={{ width: "100%" }}>
+  const menu = (
+    <Menu>
+      <Menu.Item key="0">
+      <Button type="primary" onClick={showModal} style={{ width: "100%" }}>
           Add member
         </Button>
         <Modal
@@ -99,9 +82,32 @@ function ChatHead({ group, id }) {
             placeholder="Input walletId"
           />
         </Modal>
-        <Button><Link to={`/chat/${id}/trade`}>Trade</Link></Button>
-          </div>
+    </Menu.Item>
+    <Menu.Item key="1">
+    <Button type="primary" style={{ width: "100%" }}><Link to={`/chat/${id}/trade`}>Trade</Link></Button>
+    </Menu.Item>
+    </Menu>
+  )
+
+  return (
+    <div className="content__header">
+      <div className="blocks">
+        <div className="current-chatting-user">
+          {users.map((e) => (
+            <Avatar isOnline="active" image={person} key={e} />
+          ))}
+          <p>{group.get("nameGroup")}</p>
         </div>
+      </div>
+
+      <div className="blocks">
+        <div className="settings">
+        <Dropdown overlay={menu} trigger={['click']}>
+    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+    <i className="fa fa-cog"></i>
+    </a>
+  </Dropdown>
+        </div> 
       </div>
     </div>
   );

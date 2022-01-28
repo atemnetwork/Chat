@@ -10,45 +10,47 @@ function Trade({ quote, toAddress }) {
 
   const { data } = useMoralisQuery(
     "Notifies",
-    (query) => query.equalTo("groupId", id).limit(1),
-
+    (query) => query
+      .equalTo("groupId", id)
+      .limit(1),
     [id],
     {
       live: true,
     }
   );
 
-  // console.log(quote)
+  console.log(data)
   // console.log(parseFloat(Moralis.Units.FromWei(quote ? quote?.fromTokenAmount : "0", quote ? quote?.fromToken?.decimals : "0").toFixed(6)))
-  const { fetch, error, isFetching } = useWeb3Transfer();
+  // const { fetch, error, isFetching } = useWeb3Transfer();
 
-  useEffect(() => {
-    data && data.forEach((e) => {
-    if(e.get("status") === "pending") return null
-    else if (e.get("status") === "true")
-    {
-      console.log(e.get("status"))
-      if(e.get("fromAddress") === user.get("ethAddress"))
-      {
-        fetch({ params: {
-          amount: e.get("fromAmount"),
-          receiver: e.get("toAddress"),
-          type: "erc20",
-          contractAddress: e.get("fromContractAddress"),}
-        })
-      }
-      if(e.get("toAddress") === user.get("ethAddress"))
-      {
-        fetch({ params: {
-          amount: e.get("toAmount"),
-          receiver: e.get("fromAddress"),
-          type: "erc20",
-          contractAddress: e.get("toContractAddress"),}
-        })
-      }
-    }
-  })
-  }, [data])
+  // useEffect(() => {
+  //   data.length > 0 && data.forEach((e) => {
+  //   if(e.get("status") === "pending") return null
+  //   else if (e.get("status") === "true")
+  //   {
+  //     if(e.get("fromAddress") === user.get("ethAddress"))
+  //     {
+  //       console.log("a")
+  //       // fetch({ params: {
+  //       //   amount: e.get("fromAmount"),
+  //       //   receiver: e.get("toAddress"),
+  //       //   type: "erc20",
+  //       //   contractAddress: e.get("fromContractAddress"),}
+  //       // })
+  //     }
+  //     if(e.get("toAddress") === user.get("ethAddress"))
+  //     {
+  //       console.log("b")
+  //       // fetch({ params: {
+  //       //   amount: e.get("toAmount"),
+  //       //   receiver: e.get("fromAddress"),
+  //       //   type: "erc20",
+  //       //   contractAddress: e.get("toContractAddress"),}
+  //       // })
+  //     }
+  //   }
+  // })
+  // }, [data])
 
   // ////
   // const {fetch: fetch1, error: error1, isFetching: isFetching1} = useWeb3Transfer({
@@ -87,6 +89,8 @@ function Trade({ quote, toAddress }) {
         status: "pending",
         fromContractAddress: quote ? quote?.fromToken.address : "",
         toContractAddress: quote ? quote?.toToken.address : "",
+        confirm1: "false",
+        confirm2: "false",
       })
       .then(
         (notify) => {},

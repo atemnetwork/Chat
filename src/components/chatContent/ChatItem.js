@@ -1,14 +1,16 @@
 // import { message } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import { useMoralis } from "react-moralis";
 import Avatar from "../chatList/Avatar";
 import person from "../../images/person default.jpg"
+import { Button } from "antd";
+import { Link } from "react-router-dom";
 
 export default function ChatItem({ message }) {
 
     const { user } = useMoralis();
 
-    
+    const [visible, setVisible] = useState(false);
 
     const isUserMessage = message.get("ethAddress") === user.get("ethAddress");
 
@@ -24,7 +26,16 @@ export default function ChatItem({ message }) {
             <span style={{color: "white"}}>Seen 1.03PM</span>
           </div>
         </div>
-        <Avatar isOnline="active" image={person} />
+        <div onClick={() => setVisible(!visible)} style={{cursor: "pointer"}}>
+        <Avatar isOnline="active" image={person}></Avatar>
+        </div>
+        <div className={visible && !isUserMessage ? "drop" : "drop_none"}>
+        <Button>
+        <Link to={`/tranfer/${message.get("ethAddress")}`}>
+            Tranfer
+          </Link>
+        </Button>  
+        </div>
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -15,7 +15,13 @@ import Trade from "./view/Trade";
 import Tranfer from "./components/tranfer/Tranfer";
 
 function App() {
-  const { isAuthenticated, isAuthenticating } = useMoralis();
+  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } = useMoralis();
+
+  useEffect(() => {
+    const connectorId = window.localStorage.getItem("connectorId");
+    if (isAuthenticated && !isWeb3Enabled && !isWeb3EnableLoading) enableWeb3({ provider: connectorId });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated, isWeb3Enabled]);
 
   return (
     
@@ -31,7 +37,7 @@ function App() {
           <Route exact path="/" element={<Chat />}></Route>
           <Route exact path="/chat/:id" element={<Chats />}></Route>
           <Route exact path="chat/:id/trade" element={<Trade />}></Route>
-          <Route exact path="/tranfer" element={<Tranfer />}></Route>
+          <Route exact path="/tranfer/:id" element={<Tranfer />}></Route>
           {/* </>)}
           </> : <>Loading...</>} */}
         </Routes>

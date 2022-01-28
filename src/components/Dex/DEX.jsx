@@ -376,7 +376,7 @@ function DEX({ chain, customTokens = {} }) {
             <PriceSwap />
           </div>
         )}
-        {/* <Button
+        <Button
           type="primary"
           size="large"
           style={{
@@ -389,9 +389,9 @@ function DEX({ chain, customTokens = {} }) {
           disabled={!ButtonState.isActive}
         >
           {ButtonState.text}
-        </Button> */}
-        <Trade quote = {quote} toAddress = {toAddress}
-                />
+        </Button>
+        {/* <Trade quote = {quote} toAddress = {toAddress}
+                /> */}
       </Card>
       <Modal
         title="Select a token"
