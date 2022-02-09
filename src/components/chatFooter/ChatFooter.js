@@ -52,7 +52,7 @@ function ChatFooter({ endOfMessagesRef, id }) {
           <button className="addFiles">
             <i className="fa fa-plus"></i>
           </button>
-          <input className='chat_input' type="text" placeholder='Enter a Message' value={message} onChange={e => setMessage(e.target.value)}/>
+          <input type="text" placeholder='Enter a Message' value={message} onChange={e => setMessage(e.target.value)}/>
           <SmileOutlined onClick={() => setEmoji(!emoji)} className='emoji_icon'/>
           {emoji &&
           <Picker onEmojiClick={onEmojiClick} pickerStyle={{ width: '100%', marginBottom: '10px' }}/>

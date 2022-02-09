@@ -22,7 +22,7 @@ const styles = {
   },
 };
 
-function NFTBalance() {
+function NFT() {
   const { data: NFTBalances } = useNFTBalances();
   const { Moralis, chainId } = useMoralis();
   const [visible, setVisibility] = useState(false);
@@ -33,28 +33,27 @@ function NFTBalance() {
   const { verifyMetadata } = useVerifyMetadata();
   const { id } = useParams();
 
-  async function transfer(nft, amount, receiver) {
+  async function transfer(nft, amount) {
     const options = {
-      type: nft.contract_type,
-      tokenId: nft.token_id,
-      receiver: receiver,
-      contractAddress: nft.token_address,
+      type: nft?.contract_type?.toLowerCase(),
+      tokenId: nft?.token_id,
+      receiver: id,
+      contractAddress: nft?.token_address,
     };
-
+    
     if (options.type === "erc1155") {
-      options.amount = amount;
+      options.amount = amount ?? nft.amount;
     }
 
     setIsPending(true);
-    await Moralis.transfer(options)
-      .then((tx) => {
-        console.log(tx);
-        setIsPending(false);
-      })
-      .catch((e) => {
-        console.log(e.message);
-        setIsPending(false);
-      });
+    try {
+      const tx = await Moralis.transfer(options);
+      console.log(tx);
+      setIsPending(false);
+    } catch (e) {
+      alert(e.message);
+      setIsPending(false);
+    }
   }
 
   const handleTransferClick = (nft) => {
@@ -114,7 +113,7 @@ function NFTBalance() {
         title={`Transfer ${nftToSend?.name || "NFT"}`}
         visible={visible}
         onCancel={() => setVisibility(false)}
-        onOk={() => transfer(nftToSend, amountToSend, id)}
+        onOk={() => transfer(nftToSend, amountToSend)}
         confirmLoading={isPending}
         okText="Send"
       >
@@ -131,4 +130,4 @@ function NFTBalance() {
   );
 }
 
-export default NFTBalance;
+export default NFT;

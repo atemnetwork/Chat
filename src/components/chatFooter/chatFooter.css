@@ -37,26 +37,19 @@
   .sendNewMessage button i {
     display: block;
   }
-  /* .sendNewMessage input {
+  .sendNewMessage input {
     flex-grow: 1;
     padding: 0 15px;
     background-color: transparent;
     border: none;
     outline: none;
-  } */
+  }
   #sendMsgBtn {
     background-color: #3b5bfe;
     color: #fff;
   }
   .emoji_none {
     display: none;
-  }
-  .chat_input {
-    padding: 7px 30px 7px 10px;
-  width: calc(100% - 40px);
-  border-radius: 3px;
-  border: 1px solid #999;
-  margin-bottom: 10px;
   }
   .emoji_icon {
     cursor: pointer;
