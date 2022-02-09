@@ -22,6 +22,11 @@ export default class Nav extends Component {
         <div className="nav__blocks">
           <img src={bsc} alt="bsc"></img>
         </div>
+        {/* <div className="btn-nft">
+          <Link to="/nft">
+            NFT
+          </Link>
+        </div> */}
         {/* <div className="btn-trade">
           <Link to="/trade">
             Trade

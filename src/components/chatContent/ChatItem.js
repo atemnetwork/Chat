@@ -31,10 +31,15 @@ export default function ChatItem({ message }) {
         </div>
         <div className={visible && !isUserMessage ? "drop" : "drop_none"}>
         <Button>
-        <Link to={`/tranfer/${message.get("ethAddress")}`}>
-            Tranfer
+        <Link to={`/tranferCoin/${message.get("ethAddress")}`}>
+            Tranfer Coin
           </Link>
-        </Button>  
+        </Button>
+        <Button>
+        <Link to={`/tranferNFT/${message.get("ethAddress")}`}>
+            Tranfer NFT
+          </Link>
+        </Button>
         </div>
       </div>
     );

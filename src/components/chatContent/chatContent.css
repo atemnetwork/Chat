@@ -101,4 +101,9 @@
   .drop_none {
     display: none;
   }
+  .drop {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+  }
   

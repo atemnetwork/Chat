@@ -5,7 +5,7 @@ import ChatItem from "./ChatItem";
 import ChatFooter from "../chatFooter/ChatFooter";
 import { useParams } from "react-router-dom";
 import ChatHead from "../chatHead/ChatHead";
-import { Button, message } from "antd";
+import { Button } from "antd";
 
 const MINS_DURATION = 150000;
 
@@ -47,143 +47,143 @@ export default function ChatContent() {
     [id]
   );
 
-  const { data: notify } = useMoralisQuery(
-    "Notifies",
-    (query) => query.equalTo("groupId", id),
+  // const { data: notify } = useMoralisQuery(
+  //   "Notifies",
+  //   (query) => query.equalTo("groupId", id),
 
-    [id],
-    {
-      live: true,
-    }
-  );
+  //   [id],
+  //   {
+  //     live: true,
+  //   }
+  // );
 
-  console.log(notify)
+  // console.log(notify)
 
-  const { fetch, error, isFetching } = useWeb3Transfer();
+  // const { fetch, error, isFetching } = useWeb3Transfer();
 
-  useEffect(() => {
-    notify.length > 0 &&
-      notify.forEach((e) => {
-        if (e.get("status") === "pending") return null;
-        else if (e.get("status") === "true") {
-          if (
-            e.get("fromAddress") === user.get("ethAddress") &&
-            e.get("confirm1") === "false"
-          ) {
-            console.log("a")
+  // useEffect(() => {
+  //   notify.length > 0 &&
+  //     notify.forEach((e) => {
+  //       if (e.get("status") === "pending") return null;
+  //       else if (e.get("status") === "true") {
+  //         if (
+  //           e.get("fromAddress") === user.get("ethAddress") &&
+  //           e.get("confirm1") === "false"
+  //         ) {
+  //           console.log("a")
             
 
            
-            // fetch({ params: {
-            //   amount: e.get("fromAmount"),
-            //   receiver: e.get("toAddress"),
-            //   type: "erc20",
-            //   contractAddress: e.get("fromContractAddress"),}
-            // });
-            //   console.log("c"),
-            //    query.get(e.id).then(
-            //   (monster) => {
-            //     monster.set("confirm1", "true");
-            //     console.log("d")
-            //     return monster.save();
-            //   },
-            //   (error) => {
-            //     console.log(error.message);
-            //   }
-            // )
-            // );
-            // Moralis.Cloud.afterSave("EthTransactions", async function(request) {
-            //   const confirmed = request.object.get("confirmed");
-            //   if (confirmed) {
-            //     const Monster = Moralis.Object.extend("Notifies");
-            // const query = new Moralis.Query(Monster);
-            // query.get(e.id).then(
-            //     (monster) => {
-            //       monster.set("confirm1", "true");
-            //       console.log("d")
-            //       return monster.save();
-            //     },
-            //     (error) => {
-            //       console.log(error.message);
-            //     }
-            //   )
-            //   } else {
-            //     // handle unconfirmed case
-            //   }
-            // });
-          }
-          else if (
-            e.get("toAddress") === user.get("ethAddress") &&
-            e.get("confirm2") === "false"
-          ) {
-            console.log("b")
-            // const Monster = Moralis.Object.extend("Notifies");
-            // const query = new Moralis.Query(Monster);
+  //           // fetch({ params: {
+  //           //   amount: e.get("fromAmount"),
+  //           //   receiver: e.get("toAddress"),
+  //           //   type: "erc20",
+  //           //   contractAddress: e.get("fromContractAddress"),}
+  //           // });
+  //           //   console.log("c"),
+  //           //    query.get(e.id).then(
+  //           //   (monster) => {
+  //           //     monster.set("confirm1", "true");
+  //           //     console.log("d")
+  //           //     return monster.save();
+  //           //   },
+  //           //   (error) => {
+  //           //     console.log(error.message);
+  //           //   }
+  //           // )
+  //           // );
+  //           // Moralis.Cloud.afterSave("EthTransactions", async function(request) {
+  //           //   const confirmed = request.object.get("confirmed");
+  //           //   if (confirmed) {
+  //           //     const Monster = Moralis.Object.extend("Notifies");
+  //           // const query = new Moralis.Query(Monster);
+  //           // query.get(e.id).then(
+  //           //     (monster) => {
+  //           //       monster.set("confirm1", "true");
+  //           //       console.log("d")
+  //           //       return monster.save();
+  //           //     },
+  //           //     (error) => {
+  //           //       console.log(error.message);
+  //           //     }
+  //           //   )
+  //           //   } else {
+  //           //     // handle unconfirmed case
+  //           //   }
+  //           // });
+  //         }
+  //         else if (
+  //           e.get("toAddress") === user.get("ethAddress") &&
+  //           e.get("confirm2") === "false"
+  //         ) {
+  //           console.log("b")
+  //           // const Monster = Moralis.Object.extend("Notifies");
+  //           // const query = new Moralis.Query(Monster);
 
             
-            // fetch({ params: {
-            //   amount: e.get("toAmount"),
-            //   receiver: e.get("fromAddress"),
-            //   type: "erc20",
-            //   contractAddress: e.get("toContractAddress"),}
-            // }).then(
-            //   console.log("e"),
-            //   query.get(e.id).then(
-            //   (monster) => {
-            //     monster.set("confirm2", "true");
-            //     console.log("f")
-            //     return monster.save();
-            //   },
-            //   (error) => {
-            //     console.log(error.message);
-            //   }
-            // )
-            // );
+  //           // fetch({ params: {
+  //           //   amount: e.get("toAmount"),
+  //           //   receiver: e.get("fromAddress"),
+  //           //   type: "erc20",
+  //           //   contractAddress: e.get("toContractAddress"),}
+  //           // }).then(
+  //           //   console.log("e"),
+  //           //   query.get(e.id).then(
+  //           //   (monster) => {
+  //           //     monster.set("confirm2", "true");
+  //           //     console.log("f")
+  //           //     return monster.save();
+  //           //   },
+  //           //   (error) => {
+  //           //     console.log(error.message);
+  //           //   }
+  //           // )
+  //           // );
 
             
-          }
-        }
-      });
-  }, [notify]);
+  //         }
+  //       }
+  //     });
+  // }, [notify]);
 
-  const handleSubmit = async (id) => {
-    const Monster = Moralis.Object.extend("Notifies");
-    const query = new Moralis.Query(Monster);
+  // const handleSubmit = async (id) => {
+  //   const Monster = Moralis.Object.extend("Notifies");
+  //   const query = new Moralis.Query(Monster);
 
-    query.get(id).then(
-      (monster) => {
-        monster.set("status", "true");
-        return monster.save();
-      },
-      (error) => {
-        console.log(error.message);
-      }
-    );
-    // query.equalTo("objectId", id)
-    // const results = await query.find();
+  //   query.get(id).then(
+  //     (monster) => {
+  //       monster.set("status", "true");
+  //       return monster.save();
+  //     },
+  //     (error) => {
+  //       console.log(error.message);
+  //     }
+  //   );
+  //   // query.equalTo("objectId", id)
+  //   // const results = await query.find();
 
-    //   fetch({
-    //     amount: results[0].get("toAmount"),
-    //     receiver: results[0].get("fromAddress"),
-    //     type: "erc20",
-    //     contractAddress: results[0].get("toContractAddress"),
-    //   })
-  };
+  //   //   fetch({
+  //   //     amount: results[0].get("toAmount"),
+  //   //     receiver: results[0].get("fromAddress"),
+  //   //     type: "erc20",
+  //   //     contractAddress: results[0].get("toContractAddress"),
+  //   //   })
+  // };
 
-  const handleCancel = async (id) => {
-    const Monster = Moralis.Object.extend("Notifies");
-    const query = new Moralis.Query(Monster);
+  // const handleCancel = async (id) => {
+  //   const Monster = Moralis.Object.extend("Notifies");
+  //   const query = new Moralis.Query(Monster);
 
-    query.get(id).then(
-      (monster) => {
-        monster.set("status", "false");
-        return monster.save();
-      },
-      (error) => {
-        console.log(error.message);
-      }
-    );
-  };
+  //   query.get(id).then(
+  //     (monster) => {
+  //       monster.set("status", "false");
+  //       return monster.save();
+  //     },
+  //     (error) => {
+  //       console.log(error.message);
+  //     }
+  //   );
+  // };
 
   return (
     <div className="main__chatcontent">
@@ -214,7 +214,7 @@ export default function ChatContent() {
       ) : (
         <></>
       )}
-      {notify &&
+      {/* {notify &&
         notify.map((e) => (
           <div
             className={e.get("status") === "pending" ? "" : "trade_none"}
@@ -234,7 +234,7 @@ export default function ChatContent() {
               <Button onClick={() => handleCancel(e.id)}>Cancel</Button>
             </div>
           </div>
-        ))}
+        ))} */}
     </div>
   );
 }

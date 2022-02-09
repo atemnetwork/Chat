@@ -13,6 +13,7 @@ import "./App.css";
 import Login from "./view/Login";
 import Trade from "./view/Trade";
 import Tranfer from "./components/tranfer/Tranfer";
+import NFT from "./view/NFT";
 
 function App() {
   const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } = useMoralis();
@@ -37,7 +38,9 @@ function App() {
           <Route exact path="/" element={<Chat />}></Route>
           <Route exact path="/chat/:id" element={<Chats />}></Route>
           <Route exact path="chat/:id/trade" element={<Trade />}></Route>
-          <Route exact path="/tranfer/:id" element={<Tranfer />}></Route>
+          <Route exact path="/tranferCoin/:id" element={<Tranfer />}></Route>
+          <Route exact path="/tranferNFT/:id" element={<NFT />}></Route>
+          {/* <Route exact path="/nft" element={<NFT />}></Route> */}
           {/* </>)}
           </> : <>Loading...</>} */}
         </Routes>
